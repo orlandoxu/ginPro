@@ -15,7 +15,12 @@ func init() {
 }
 
 func PushToChain(url string, handlerFunc ...HandlerFunc) {
-
+	_, ok := router[url]
+	if !ok {
+		router[url] = handlerFunc
+	} else {
+		router[url] = append(router[url], handlerFunc...)
+	}
 }
 
 // TODO: 这儿可以提供一种，根据正则表达式来匹配router的逻辑
