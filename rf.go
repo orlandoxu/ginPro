@@ -1,5 +1,7 @@
 package rf
 
+import "sync"
+
 const (
 	debugCode = iota
 	releaseCode
@@ -7,7 +9,11 @@ const (
 )
 
 func New() *engine {
-	engine := &engine{}
-
-	return engine
+	return &engine{
+		ctxPool: sync.Pool{
+			New: func() interface{} {
+				return &Context{}
+			},
+		},
+	}
 }

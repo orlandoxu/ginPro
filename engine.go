@@ -24,6 +24,8 @@ func (e *engine) UseByRegex(reg string, handlerFunc ...HandlerFunc) {
 
 // ServeHTTP conforms to the http.Handler interface.
 func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	log.Println(w)
+	log.Println(req)
 	c := e.ctxPool.Get().(*Context)
 	//c.writermem.reset(w)
 	//c.Request = req
@@ -35,8 +37,16 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 // 这儿是处理的业务逻辑
-func (e *engine) handleHTTPRequest(ctx *Context) {
-	log.Println(ctx)
+func (e *engine) handleHTTPRequest(c *Context) {
+
+	httpMethod := c.Request.Method
+	rPath := c.Request.URL.Path
+	unescape := false
+	_ = httpMethod
+	_ = rPath
+	_ = unescape
+
+	// Find root of the tree for the given HTTP method
 }
 
 func (e *engine) Run(host string) (err error) {

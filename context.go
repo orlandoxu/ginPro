@@ -4,8 +4,8 @@ import "net/http"
 
 // 上下文
 type Context struct {
-	Request  *http.Request
-	index    int8
+	Request *http.Request
+	//index    int8
 	fullPath string
 
 	// 洋葱
@@ -14,6 +14,12 @@ type Context struct {
 }
 
 func (c *Context) Next() {
+	//c.HanderIndex++
+	//c.Handers[c.HanderIndex](c)
+
 	c.HanderIndex++
-	c.Handers[c.HanderIndex](c)
+	for c.HanderIndex < int8(len(c.Handers)) {
+		c.Handers[c.HanderIndex](c)
+		c.HanderIndex++
+	}
 }
