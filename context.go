@@ -4,7 +4,11 @@ import "net/http"
 
 // 上下文
 type Context struct {
-	Request *http.Request
+	Method   string
+	Path     string
+	RawQuery string
+	Host     string
+	Request  *http.Request
 	//index    int8
 	fullPath string
 

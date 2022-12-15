@@ -26,7 +26,11 @@ func (e *engine) UseByRegex(reg string, handlerFunc ...HandlerFunc) {
 func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Println(w)
 	log.Println(req)
+
 	c := e.ctxPool.Get().(*Context)
+	c.Path = req.URL.Path
+	c.RawQuery = req.URL.RawQuery
+	c.Host = req.Host
 	//c.writermem.reset(w)
 	//c.Request = req
 	//c.reset()
