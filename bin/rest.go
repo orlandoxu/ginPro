@@ -8,16 +8,12 @@ import (
 func main() {
 	app := rf.New()
 	app.Post("/hello", func(c *rf.Context) {
-		log.Println("111 start!")
 		c.Next()
-		log.Println("111 end!")
 	}, func(c *rf.Context) {
-		log.Println("222 start!")
-		c.Abort()
-		log.Println("222 end!")
 	}, func(c *rf.Context) {
 		log.Println("333 start!")
 		log.Println("333 end!")
+		c.Json(0, "", 121)
 	})
 
 	app.Run(":8084")
