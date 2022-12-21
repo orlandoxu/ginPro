@@ -31,24 +31,41 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c.Path = req.URL.Path
 	c.RawQuery = req.URL.RawQuery
 	c.Host = req.Host
-	//c.writermem.reset(w)
-	//c.Request = req
-	//c.reset()
-	//
+	c.HanderIndex = 0
+	//c.Handers =
+
+	r, isOk := router[c.Path]
+	if !isOk {
+		// TODO: 这儿直接返回，不是很合适
+		return
+	}
+
+	c.Handers = r
+
 	e.handleHTTPRequest(c)
-	//
+
 	e.ctxPool.Put(c)
 }
 
 // 这儿是处理的业务逻辑
 func (e *engine) handleHTTPRequest(c *Context) {
+	log.Println(c.Path)
 
-	httpMethod := c.Request.Method
-	rPath := c.Request.URL.Path
-	unescape := false
-	_ = httpMethod
-	_ = rPath
-	_ = unescape
+	for int(c.HanderIndex) < len(c.Handers) {
+		h := c.Handers[c.HanderIndex]
+
+		h(c)
+		c.HanderIndex += 1
+	}
+
+	// 找到handlers
+
+	//httpMethod := c.Request.Method
+	//rPath := c.Request.URL.Path
+	//unescape := false
+	//_ = httpMethod
+	//_ = rPath
+	//_ = unescape
 
 	// Find root of the tree for the given HTTP method
 }
