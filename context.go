@@ -1,6 +1,9 @@
 package rf
 
-import "net/http"
+import (
+	"math"
+	"net/http"
+)
 
 // 上下文
 type Context struct {
@@ -26,4 +29,8 @@ func (c *Context) Next() {
 		c.Handers[c.HanderIndex](c)
 		c.HanderIndex++
 	}
+}
+
+func (c *Context) Abort() {
+	c.HanderIndex = math.MaxInt8 / 2
 }

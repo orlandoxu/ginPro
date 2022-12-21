@@ -13,7 +13,7 @@ func main() {
 		log.Println("111 end!")
 	}, func(c *rf.Context) {
 		log.Println("222 start!")
-		c.Next()
+		c.Abort()
 		log.Println("222 end!")
 	}, func(c *rf.Context) {
 		log.Println("333 start!")
