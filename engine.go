@@ -32,7 +32,7 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c.RawQuery = req.URL.RawQuery
 	c.Host = req.Host
 	c.HanderIndex = 0
-	//c.Handers =
+	c.Writer = &w
 
 	r, isOk := router[c.Path]
 	if !isOk {
@@ -59,13 +59,6 @@ func (e *engine) handleHTTPRequest(c *Context) {
 	}
 
 	// 找到handlers
-
-	//httpMethod := c.Request.Method
-	//rPath := c.Request.URL.Path
-	//unescape := false
-	//_ = httpMethod
-	//_ = rPath
-	//_ = unescape
 
 	// Find root of the tree for the given HTTP method
 }
