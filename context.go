@@ -2,6 +2,7 @@ package ginp
 
 import (
 	"encoding/json"
+	"errors"
 	"math"
 	"net/http"
 )
@@ -15,8 +16,9 @@ type Context struct {
 	Request  *http.Request
 	Writer   *http.ResponseWriter
 	//index    int8
-	fullPath string
-	Body     []byte
+	fullPath   string
+	Body       []byte
+	contextMap map[string]interface{} // 可以记录上下文
 
 	// 洋葱
 	Handers     HandlersChain
@@ -67,19 +69,26 @@ func (c *Context) BindBodyData(t any) error {
 	return nil
 }
 
-func (c *Context) GetString(key string) string {
-	m := make(map[string]string)
-
-	err := json.Unmarshal(c.Body, m)
-	if err != nil {
-		return ""
+func (c *Context) Set(key string, value interface{}) {
+	if c.contextMap == nil {
+		c.contextMap = make(map[string]interface{})
 	}
 
-	str, isOk := m[key]
+	c.contextMap[key] = value
+}
+
+func (c *Context) Get(key string) (interface{}, error) {
+	r, isOk := c.contextMap[key]
 
 	if !isOk {
-		return ""
+		return "", errors.New("key不存在")
 	}
 
-	return str
+	return r, nil
+}
+
+func (c *Context) GetString(key string) string {
+	str, _ := c.Get(key)
+
+	return str.(string)
 }
