@@ -1,4 +1,4 @@
-package ginPro
+package ginp
 
 import (
 	"encoding/json"

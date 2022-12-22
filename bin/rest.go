@@ -1,16 +1,16 @@
 package main
 
 import (
-	"ginPro"
+	"ginp"
 	"log"
 )
 
 func main() {
-	app := ginPro.New()
-	app.Post("/hello", func(c *ginPro.Context) {
+	app := ginp.New()
+	app.Post("/hello", func(c *ginp.Context) {
 		c.Next()
-	}, func(c *ginPro.Context) {
-	}, func(c *ginPro.Context) {
+	}, func(c *ginp.Context) {
+	}, func(c *ginp.Context) {
 		log.Println("333 start!")
 		log.Println("333 end!")
 		c.Json(0, "", 121)
