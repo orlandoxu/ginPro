@@ -5,16 +5,18 @@ import (
 	"errors"
 	"math"
 	"net/http"
+	"net/url"
 )
 
 // 上下文
 type Context struct {
-	Method   string
-	Path     string
-	RawQuery string
-	Host     string
-	Request  *http.Request
-	Writer   *http.ResponseWriter
+	Method string
+	Path   string
+	Url    *url.URL
+	//RawQuery string
+	Host string
+	//Request *http.Request
+	Writer *http.ResponseWriter
 	//index    int8
 	fullPath   string
 	Body       []byte
@@ -96,4 +98,16 @@ func (c *Context) GetString(key string) string {
 	str, _ := c.Get(key)
 
 	return str.(string)
+}
+
+func (c *Context) Query(key string) string {
+	values := c.Url.Query()
+
+	k, isOk := values[key]
+
+	if !isOk || len(k) == 0 {
+		return ""
+	}
+
+	return k[0]
 }

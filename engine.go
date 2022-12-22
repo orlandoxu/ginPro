@@ -30,7 +30,7 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	c := e.ctxPool.Get().(*Context)
 	c.Path = req.URL.Path
-	c.RawQuery = req.URL.RawQuery
+	c.Url = req.URL
 	c.Host = req.Host
 	c.HanderIndex = 0
 	c.Writer = &w
