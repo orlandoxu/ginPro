@@ -1,6 +1,7 @@
 package ginp
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
 	"sync"
@@ -33,7 +34,12 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c.Host = req.Host
 	c.HanderIndex = 0
 	c.Writer = &w
-	c.Body = req.Body
+	if req.Body != nil {
+		body, _ := ioutil.ReadAll(req.Body)
+		c.Body = body
+	} else {
+		c.Body = []byte{}
+	}
 
 	r, isOk := router[c.Path]
 	if !isOk {
