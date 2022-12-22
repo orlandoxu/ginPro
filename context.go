@@ -56,6 +56,11 @@ func (c *Context) Json(ret int, params ...interface{}) {
 	(*c.Writer).Write(str)
 }
 
+func (c *Context) SendAbort(ret int, params ...interface{}) {
+	c.Json(ret, params...)
+	c.Abort()
+}
+
 // 兼容以前的代码
 func (c *Context) Send(ret int, params ...interface{}) {
 	c.Json(ret, params...)
