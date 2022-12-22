@@ -52,3 +52,8 @@ func (c *Context) Json(ret int, params ...interface{}) {
 
 	(*c.Writer).Write(str)
 }
+
+// 兼容以前的代码
+func (c *Context) Send(ret int, params ...interface{}) {
+	c.Json(ret, params...)
+}
