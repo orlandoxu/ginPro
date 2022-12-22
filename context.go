@@ -2,7 +2,6 @@ package ginp
 
 import (
 	"encoding/json"
-	"errors"
 	"math"
 	"net/http"
 	"net/url"
@@ -84,14 +83,10 @@ func (c *Context) Set(key string, value interface{}) {
 	c.contextMap[key] = value
 }
 
-func (c *Context) Get(key string) (interface{}, error) {
+func (c *Context) Get(key string) (interface{}, bool) {
 	r, isOk := c.contextMap[key]
 
-	if !isOk {
-		return "", errors.New("key不存在")
-	}
-
-	return r, nil
+	return r, isOk
 }
 
 func (c *Context) GetString(key string) string {
