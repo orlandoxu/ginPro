@@ -2,6 +2,8 @@ package ginp
 
 import (
 	"encoding/json"
+	"io"
+	"io/ioutil"
 	"math"
 	"net/http"
 )
@@ -16,6 +18,7 @@ type Context struct {
 	Writer   *http.ResponseWriter
 	//index    int8
 	fullPath string
+	Body     io.ReadCloser
 
 	// 洋葱
 	Handers     HandlersChain
@@ -56,4 +59,13 @@ func (c *Context) Json(ret int, params ...interface{}) {
 // 兼容以前的代码
 func (c *Context) Send(ret int, params ...interface{}) {
 	c.Json(ret, params...)
+}
+
+func (c *Context) BindBodyData(t any) error {
+	s, err := ioutil.ReadAll(c.Body)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(s, t)
 }

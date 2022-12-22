@@ -33,6 +33,7 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c.Host = req.Host
 	c.HanderIndex = 0
 	c.Writer = &w
+	c.Body = req.Body
 
 	r, isOk := router[c.Path]
 	if !isOk {
