@@ -34,6 +34,8 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c.Host = req.Host
 	c.HanderIndex = 0
 	c.Writer = &w
+	c.Request = req
+
 	if req.Body != nil {
 		body, _ := ioutil.ReadAll(req.Body)
 		c.Body = body

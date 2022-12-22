@@ -14,9 +14,9 @@ type Context struct {
 	Path   string
 	Url    *url.URL
 	//RawQuery string
-	Host string
-	//Request *http.Request
-	Writer *http.ResponseWriter
+	Host    string
+	Request *http.Request
+	Writer  *http.ResponseWriter
 	//index    int8
 	fullPath   string
 	Body       []byte
