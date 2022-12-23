@@ -5,6 +5,7 @@ import (
 	"math"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // 上下文
@@ -105,4 +106,9 @@ func (c *Context) Query(key string) string {
 	}
 
 	return k[0]
+}
+
+func (c *Context) ClientIP() string {
+	// TODO: 这个函数，没测试。有可能会有异常
+	return c.Request.RemoteAddr[0:strings.LastIndex(c.Request.RemoteAddr, ":")]
 }

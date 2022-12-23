@@ -8,6 +8,7 @@ import (
 func main() {
 	app := ginp.New()
 	app.Post("/hello", func(c *ginp.Context) {
+		log.Println(c.ClientIP())
 		log.Println(c.Query("a"))
 		c.Next()
 	}, func(c *ginp.Context) {
