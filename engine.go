@@ -11,6 +11,7 @@ type engine struct {
 }
 
 func (e *engine) Post(url string, handlerFunc ...HandlerFunc) {
+	PushToChain(url)
 	PushToChain(url, handlerFunc...)
 }
 

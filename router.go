@@ -17,7 +17,9 @@ func init() {
 func PushToChain(url string, handlerFunc ...HandlerFunc) {
 	_, ok := router[url]
 	if !ok {
-		router[url] = handlerFunc
+		router[url] = []HandlerFunc{}
+		router[url] = append(router[url], middlewareChain...)
+		router[url] = append(router[url], handlerFunc...)
 	} else {
 		router[url] = append(router[url], handlerFunc...)
 	}
