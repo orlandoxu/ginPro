@@ -2,7 +2,6 @@ package ginp
 
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 	"sync"
 )
@@ -25,8 +24,8 @@ func (e *engine) UseByRegex(reg string, handlerFunc ...HandlerFunc) {
 
 // ServeHTTP conforms to the http.Handler interface.
 func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	log.Println(w)
-	log.Println(req)
+	//log.Println(w)
+	//log.Println(req)
 
 	c := e.ctxPool.Get().(*Context)
 	c.Path = req.URL.Path
@@ -58,7 +57,7 @@ func (e *engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 // 这儿是处理的业务逻辑
 func (e *engine) handleHTTPRequest(c *Context) {
-	log.Println(c.Path)
+	//log.Println(c.Path)
 
 	for int(c.HanderIndex) < len(c.Handers) {
 		h := c.Handers[c.HanderIndex]
